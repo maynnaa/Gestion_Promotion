@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <!-- Boxicons CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+      
+        .parametrage-submenu li,
+  .gestion-submenu li {
+    list-style: none;
+    margin: 0;
+  }
+  
+  .parametrage-submenu li a,
+  .gestion-submenu li a {
+    color: #707070;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    display: block;
+  }
+  
+  .parametrage-submenu li a:hover,
+  .gestion-submenu li a:hover {
+    background-color: #4070f4;
+    color: #fff;
+  }
+  
+  .gestion-submenu li a {
+    font-family: "Poppins", sans-serif;
+  }
+  table {
+    width: 70%; /* Définir la largeur de la table */
+    margin: 100px auto; /* Centrer la table horizontalement avec une marge de 20px autour */
+    border-collapse: collapse; /* Fusionner les bordures de la table pour un aspect propre */
+    margin-left: 320px; /* Ajouter une marge de 30px à gauche pour décaler la table vers la droite */
+margin-top: 10px; /* Réduire l'espace au-dessus du bouton */
+
+}
+
+th, td {
+    border: 1px solid #ccc; /* Ajouter une bordure d'épaisseur 1px autour des cellules */
+    padding: 8px; /* Ajouter un espace intérieur de 8px autour du contenu des cellules */
+      height: 70px; /* Ajustez cette valeur selon vos préférences */
+white-space: nowrap; /* Empêcher le contenu de se retourner à la ligne */
+
+    
+}
+h1 {
+    margin: 70px auto; /* Centrer la table horizontalement avec une marge de 20px autour */
+    margin-left: 650px; /* Mettre la marge à gauche automatiquement pour décaler le titre vers la droite */
+margin-bottom: 15px; /* Réduire l'espace sous le titre */
+
+}
+table input[type="text"] {
+  border: none; /* Supprimer la bordure */
+  background-color: transparent; /* Supprimer l'arrière-plan */
+  outline: none; /* Supprimer le contour lorsqu'il est en surbrillance */
+  width: 100%; /* Remplir toute la largeur de la cellule */
+}    
+button {
+  width: 10%; /* Définir la largeur de la table */
+  margin: 70px; /* Centrer la table horizontalement avec une marge de 20px autour */
+margin-top: 25px; /* Réduire l'espace au-dessus du bouton */
+margin-left: 1200px; /* Ajouter une marge de 30px à gauche pour décaler la table vers la droite */
+
+}
+#ajouterLigne {
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#ajouterLigne:hover {
+  background-color: #45a049;
+}
+#ajouterLigne:active {
+  background-color: #367737; /* Couleur de fond du bouton lorsque pressé */
+} 
+    </style>
+</head>
+<body>
+    {% include "sidebar.html" %}
+    <h1>Liste des employés</h1>
+    <button id="ajouterLigne" onclick="window.location.href='{{ url_for('liste_exc') }}'"> Page précedente</button>
+
+  
+    <!-- Table with a border -->
+    <table id="monTableau">
+          <thead>
+              <tr id="1">
+                 <th>Grade</th>
+                  <th>Nom</th>
+                  <th>Prenom</th>
+                  <th>Matricule</th>
+                  <th>Date_anciennete_grade</th>
+
+              </tr>
+          </thead>
+          <tbody>
+            {% for enregistrement in donnees %}
+        <tr>
+            <td>{{ enregistrement.grade }}</td>
+            <td>{{ enregistrement.nom }}</td>
+            <td>{{ enregistrement.prenom }}</td>
+            <td>{{ enregistrement.matricule }}</td>
+            <td>{{ enregistrement.anc_grade }}</td>
+        </tr>
+        {% endfor %}
+          </tbody>
+      </table>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Masquer les sous-menus au chargement initial
+        const parametrageSubmenu = document.querySelector(".parametrage-submenu");
+        const gestionSubmenu = document.querySelector(".gestion-submenu");
+        parametrageSubmenu.style.display = "none";
+        gestionSubmenu.style.display = "none";
+      
+        // Fonction pour afficher le sous-menu au passage de la souris sur "Paramétrage"
+        const parametrageLink = document.querySelector(".has-submenu");
+        parametrageLink.addEventListener("mouseover", () => {
+          parametrageSubmenu.style.display = "block";
+        });
+        parametrageLink.addEventListener("mouseout", () => {
+          parametrageSubmenu.style.display = "none";
+        });
+      
+        // Fonction pour afficher le sous-menu au passage de la souris sur "Gestion"
+        const gestionLink = document.querySelectorAll(".has-submenu")[1];
+        gestionLink.addEventListener("mouseover", () => {
+          gestionSubmenu.style.display = "block";
+        });
+        gestionLink.addEventListener("mouseout", () => {
+          gestionSubmenu.style.display = "none";
+        });
+        const criteresSelectionLink = document.querySelector('a[href="#"]');
+criteresSelectionLink.addEventListener('click', () => {
+    console.log("Lien 'Critères de Sélection' cliqué");
+    window.location.href = '/criteres_selection'; // Redirection vers la nouvelle page
+});
+      });
+     
+  
+</script>
+
+</body>
+</html>

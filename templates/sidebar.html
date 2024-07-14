@@ -1,0 +1,72 @@
+<!-- ... navbar ... -->
+<nav class="sidebar locked">
+    <div class="logo_items flex">
+        <span class="nav_image">
+            <img src="{{ url_for('static', filename='petit_logo.jpeg') }}" alt="logo_ministere_img">
+        </span>
+        <span class="logo_name">Bienvenue</span>
+        <i class="bx bx-x" id="sidebar-close"></i>
+    </div>
+    <div class="menu_container">
+        <div class="menu_items">
+            <ul class="menu_item">
+                <div class="menu_title flex">
+                    <span class="title">Menu</span>
+                    <span class="line"></span>
+                </div>
+                <li class="item">
+                    <!-- Lien vers la page actuelle (la route /menu) -->
+                    <a href="{{ url_for('menu') }}" class="link flex">
+                        <i class="bx bx-home-alt"></i>
+                        <span>Accueil</span>
+                    </a>
+                </li>
+                <li class="item has-submenu">
+                    <a href="#" class="link flex">
+                        <i class="bx bx-grid-alt"></i>
+                        <span>Paramétrage</span>
+                    </a>
+                    <!-- Sous-menu pour le paramétrage -->
+                    <ul class="submenu parametrage-submenu"> <!-- Ajoutez la classe "parametrage-submenu" ici -->
+                        <li>
+                        <a href="{{ url_for('criteres_selection') }}">
+                        <span>Critères de selection</span> </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('parametrage_diplome') }}">
+                                <span>Paramétrage Diplome</span> </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('parametrage_fonction') }}">
+                                <span>Paramétrage Fonction</span> </a>
+                        </li>
+                        <!-- Ajoutez d'autres éléments ici -->
+                    </ul>
+                </li>
+<!-- ... Le reste de votre code HTML ... -->
+                <li class="item has-submenu">
+                    <a href="#" class="link flex">
+                        <i class="bx bx-grid-alt"></i>
+                        <span>Gestion</span>
+                    </a>
+                    <!-- Sous-menu pour la gestion -->
+                    <ul class="submenu gestion-submenu"> <!-- Classe "gestion-submenu" pour le sous-menu "Gestion" -->
+                        <li>
+                            <a href="{{ url_for('creer_session') }}">
+                                <span>Sessions</span> </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('liste_exc') }}">
+                                <span>Liste exceptionnelle</span> </a>
+                        </li>
+                        <!-- Ajoutez d'autres éléments ici -->
+                    </ul>
+                </li>
+
+<!-- ... Le reste de votre code HTML ... -->
+
+                <!-- Ajoutez d'autres éléments de menu ici -->
+            </ul>
+        </div>
+    </div>
+</nav>

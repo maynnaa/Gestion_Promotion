@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- Include jQuery library -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+     <!-- Include datepicker plugin -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js"></script>
+     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <!-- Boxicons CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+      
+        .parametrage-submenu li,
+  .gestion-submenu li {
+    list-style: none;
+    margin: 0;
+  }
+  
+  .parametrage-submenu li a,
+  .gestion-submenu li a {
+    color: #707070;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    display: block;
+  }
+  
+  .parametrage-submenu li a:hover,
+  .gestion-submenu li a:hover {
+    background-color: #4070f4;
+    color: #fff;
+  }
+  
+  .gestion-submenu li a {
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: ##e1f1ff;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 400px;
+    margin: 20px auto 0;
+    margin-top: 140px;
+    margin-left: 660px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: grid;
+    grid-gap: 10px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: blue; /* Couleur modifiée en bleu pour cet exemple */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+h1 {
+    margin: 70px auto; /* Centrer la table horizontalement avec une marge de 20px autour */
+    margin-left: 650px; /* Mettre la marge à gauche automatiquement pour décaler le titre vers la droite */
+margin-bottom: 5px; /* Réduire l'espace sous le titre */
+
+}
+    
+    </style>
+</head>
+<body>
+    {% include "sidebar.html" %}
+    <h1>Liste exceptionnelle </h1>
+    <div class="container">
+      <form method="POST" action="/liste_exc">
+
+            <label for="nom1">Date:</label>
+            <input type="text" id="nom1" name="nom1" required>
+
+            <label for="liste">Grade:</label>
+            <select id="liste" name="liste">
+              {% for technicien in techniciens %}
+              <option>{{ technicien }}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" >Envoyer</button>
+
+        </form>
+    </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Masquer les sous-menus au chargement initial
+        const parametrageSubmenu = document.querySelector(".parametrage-submenu");
+        const gestionSubmenu = document.querySelector(".gestion-submenu");
+        parametrageSubmenu.style.display = "none";
+        gestionSubmenu.style.display = "none";
+      
+        // Fonction pour afficher le sous-menu au passage de la souris sur "Paramétrage"
+        const parametrageLink = document.querySelector(".has-submenu");
+        parametrageLink.addEventListener("mouseover", () => {
+          parametrageSubmenu.style.display = "block";
+        });
+        parametrageLink.addEventListener("mouseout", () => {
+          parametrageSubmenu.style.display = "none";
+        });
+      
+        // Fonction pour afficher le sous-menu au passage de la souris sur "Gestion"
+        const gestionLink = document.querySelectorAll(".has-submenu")[1];
+        gestionLink.addEventListener("mouseover", () => {
+          gestionSubmenu.style.display = "block";
+        });
+        gestionLink.addEventListener("mouseout", () => {
+          gestionSubmenu.style.display = "none";
+        });
+        const criteresSelectionLink = document.querySelector('a[href="#"]');
+criteresSelectionLink.addEventListener('click', () => {
+    console.log("Lien 'liste exceptionnelle' cliqué");
+    window.location.href = '/liste_exc'; // Redirection vers la nouvelle page
+});
+      });
+      $(document).ready(function() {
+        $('#nom1').datepicker();
+      });    
+    
+</script>
+
+</body>
+</html>

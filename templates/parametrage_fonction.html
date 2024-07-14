@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <!-- Boxicons CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+      
+        .parametrage-submenu li,
+  .gestion-submenu li {
+    list-style: none;
+    margin: 0;
+  }
+  
+  .parametrage-submenu li a,
+  .gestion-submenu li a {
+    color: #707070;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    display: block;
+  }
+  
+  .parametrage-submenu li a:hover,
+  .gestion-submenu li a:hover {
+    background-color: #4070f4;
+    color: #fff;
+  }
+  
+  .gestion-submenu li a {
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: ##e1f1ff;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 400px;
+    margin: 20px auto 0;
+    margin-top: 140px;
+    margin-left: 660px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: grid;
+    grid-gap: 10px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: blue; /* Couleur modifiée en bleu pour cet exemple */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+h1 {
+    margin: 70px auto; /* Centrer la table horizontalement avec une marge de 20px autour */
+    margin-left: 650px; /* Mettre la marge à gauche automatiquement pour décaler le titre vers la droite */
+margin-bottom: 5px; /* Réduire l'espace sous le titre */
+
+}
+   
+/* Style pour les messages flash */
+.flash-messages-container {
+    width: 280px; /* Définir la largeur de la boîte */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #3e8e41;
+    color: #ffffff;
+    margin: 0 auto; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre verticalement */
+    margin-left:700px;
+    margin-top: 10px; /* Réduire l'espace sous le titre */
+
+}
+
+.flash-messages {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+}
+
+.flash-messages li {
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+    </style>
+</head>
+<body>
+    {% include "sidebar.html" %}
+    <h1>Paramètrage des Fonctions </h1>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+      <div class="flash-messages-container">
+          <ul class="flash-messages">
+              {% for message in messages %}
+                  <li class="{% if 'success' in message %}success{% elif 'error' in message %}error{% endif %}">
+                      {{ message }}
+                  </li>
+              {% endfor %}
+          </ul>
+      </div>
+  {% endif %}
+{% endwith %}
+    <div class="container">
+      <form method="POST" action="/parametrage_fonction">
+
+            <label for="liste">Fonction:</label>
+            <select id="liste" name="liste">
+                <!-- Boucle pour générer les options de la liste déroulante -->
+                {% for technicien in techniciens %}
+        <option>{{ technicien }}</option>
+        {% endfor %}
+            </select>
+
+            <label for="nom1">Coéfficient:</label>
+            <input type="text" id="nom1" name="nom1" required>
+
+            <input type="submit" value="Envoyer">
+        </form>
+    </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Masquer les sous-menus au chargement initial
+        const parametrageSubmenu = document.querySelector(".parametrage-submenu");
+        const gestionSubmenu = document.querySelector(".gestion-submenu");
+        parametrageSubmenu.style.display = "none";
+        gestionSubmenu.style.display = "none";
+      
+        // Fonction pour afficher le sous-menu au passage de la souris sur "Paramétrage"
+        const parametrageLink = document.querySelector(".has-submenu");
+        parametrageLink.addEventListener("mouseover", () => {
+          parametrageSubmenu.style.display = "block";
+        });
+        parametrageLink.addEventListener("mouseout", () => {
+          parametrageSubmenu.style.display = "none";
+        });
+      
+        // Fonction pour afficher le sous-menu au passage de la souris sur "Gestion"
+        const gestionLink = document.querySelectorAll(".has-submenu")[1];
+        gestionLink.addEventListener("mouseover", () => {
+          gestionSubmenu.style.display = "block";
+        });
+        gestionLink.addEventListener("mouseout", () => {
+          gestionSubmenu.style.display = "none";
+        });
+        const criteresSelectionLink = document.querySelector('a[href="#"]');
+criteresSelectionLink.addEventListener('click', () => {
+    console.log("Lien 'parametrage Fonction' cliqué");
+    window.location.href = '/parametrage_fonction'; // Redirection vers la nouvelle page
+});
+      });
+      
+</script>
+
+</body>
+</html>

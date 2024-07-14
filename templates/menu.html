@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <!-- Boxicons CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+   
+  
+    <style>
+      
+        .parametrage-submenu li,
+  .gestion-submenu li {
+    list-style: none;
+    margin: 0;
+  }
+  
+  .parametrage-submenu li a,
+  .gestion-submenu li a {
+    color: #707070;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    display: block;
+  }
+  
+  .parametrage-submenu li a:hover,
+  .gestion-submenu li a:hover {
+    background-color: #4070f4;
+    color: #fff;
+  }
+  
+  .gestion-submenu li a {
+    font-family: "Poppins", sans-serif;
+  }
+  .slideshow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    overflow: hidden;
+}
+
+.slide {
+    flex: 0 0 100%;
+    display: none; /* Hide all slides by default */
+    margin-left: 750px; /* Adjust this value to your preference */
+}
+
+.slide img {
+  max-height: 100%; /* Ajustez cette valeur pour contrôler la hauteur maximale de l'image */
+  width: auto; /* Maintain aspect ratio */
+}
+
+.slide.active {
+    display: block; /* Show active slide */
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+
+h1 {
+  margin: 70px auto; /* Centrer la table horizontalement avec une marge de 20px autour */
+  margin-left: 450px; /* Mettre la marge à gauche automatiquement pour décaler le titre vers la droite */
+margin-bottom: 15px; /* Réduire l'espace sous le titre */
+
+
+}
+.text-container {
+  width: 37%;
+  padding: 20px;
+  position: absolute;
+  top: 55%;
+  right: 0;
+  transform: translateY(-50%);
+  font-family: Snell Roundhand, cursive		; /* Changer la police */
+  color: black; /* Changer la couleur du texte */
+  font-size: 16px; /* Changer la taille de police */
+  line-height: 1.5; /* Changer l'espacement de ligne */
+}
+
+    </style>
+</head>
+<body>
+    {% include "sidebar.html" %}
+    <h1>Bienvenue dans votre application de gestion de promotion</h1>
+
+    <section class="slideshow">
+      <div class="slide">
+          <img src="{{ url_for('static', filename='img1.png') }}" alt="Slide 1">
+      </div>
+      <div class="slide">
+          <img src="{{ url_for('static', filename='img2.png') }}" alt="Slide 2">
+      </div>
+      <div class="slide">
+          <img src="{{ url_for('static', filename='img3.png') }}" alt="Slide 3">
+      </div>
+      <div class="slide">
+        <img src="{{ url_for('static', filename='img4.png') }}" alt="Slide 4">
+    </div>
+      <!-- Ajoutez plus de divs pour chaque image -->
+  </section>
+  <div class="text-container">
+    <p>Ici, nous vous offrons un espace dédié pour suivre de près chaque étape de nos promotions au service de l'artisanat. Notre application a été conçue pour vous fournir une vue d'ensemble claire et détaillée de l'évolution de chaque initiative de promotion que nous entreprenons.
+
+      Suivez en temps réel l'avancement de chaque promotion, des premières étapes de planification jusqu'à la réalisation finale. Notre objectif est de vous fournir les outils nécessaires pour garantir que chaque promotion se déroule sans accroc et atteigne ses objectifs avec succès.</p>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Masquer les sous-menus au chargement initial
+        const parametrageSubmenu = document.querySelector(".parametrage-submenu");
+        const gestionSubmenu = document.querySelector(".gestion-submenu");
+        parametrageSubmenu.style.display = "none";
+        gestionSubmenu.style.display = "none";
+      
+        // Fonction pour afficher le sous-menu au passage de la souris sur "Paramétrage"
+        const parametrageLink = document.querySelector(".has-submenu");
+        parametrageLink.addEventListener("mouseover", () => {
+          parametrageSubmenu.style.display = "block";
+        });
+        parametrageLink.addEventListener("mouseout", () => {
+          parametrageSubmenu.style.display = "none";
+        });
+      
+        // Fonction pour afficher le sous-menu au passage de la souris sur "Gestion"
+        const gestionLink = document.querySelectorAll(".has-submenu")[1];
+        gestionLink.addEventListener("mouseover", () => {
+          gestionSubmenu.style.display = "block";
+        });
+        gestionLink.addEventListener("mouseout", () => {
+          gestionSubmenu.style.display = "none";
+        });
+        const criteresSelectionLink = document.querySelector('a[href="#"]');
+criteresSelectionLink.addEventListener('click', () => {
+    console.log("Lien 'Critères de Sélection' cliqué");
+    window.location.href = '/criteres_selection'; // Redirection vers la nouvelle page
+});
+const slides = document.querySelectorAll(".slide");
+    let currentSlideIndex = 0;
+
+    function showSlide(slideIndex) {
+        slides.forEach((slide, index) => {
+            if (index === slideIndex) {
+                slide.classList.add("active");
+            } else {
+                slide.classList.remove("active");
+            }
+        });
+    }
+
+    function nextSlide() {
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        showSlide(currentSlideIndex);
+    }
+
+    showSlide(currentSlideIndex); // Affiche la première image
+    setInterval(nextSlide, 5000);
+      });
+      
+</script>
+
+</body>
+</html>

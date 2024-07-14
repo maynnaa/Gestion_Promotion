@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <!-- Boxicons CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+
+        .parametrage-submenu li,
+  .gestion-submenu li {
+    list-style: none;
+    margin: 0;
+  }
+  
+  .parametrage-submenu li a,
+  .gestion-submenu li a {
+    color: #707070;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    display: block;
+  }
+  
+  .parametrage-submenu li a:hover,
+  .gestion-submenu li a:hover {
+    background-color: #4070f4;
+    color: #fff;
+  }
+  
+  .gestion-submenu li a {
+    font-family: "Poppins", sans-serif;
+  }
+    table {
+        width: 70%; /* Définir la largeur de la table */
+        margin: 100px auto; /* Centrer la table horizontalement avec une marge de 20px autour */
+        border-collapse: collapse; /* Fusionner les bordures de la table pour un aspect propre */
+        margin-left: 320px; /* Ajouter une marge de 30px à gauche pour décaler la table vers la droite */
+    margin-top: 10px; /* Réduire l'espace au-dessus du bouton */
+
+    }
+    
+    th, td {
+        border: 1px solid #ccc; /* Ajouter une bordure d'épaisseur 1px autour des cellules */
+        padding: 8px; /* Ajouter un espace intérieur de 8px autour du contenu des cellules */
+          height: 70px; /* Ajustez cette valeur selon vos préférences */
+  white-space: nowrap; /* Empêcher le contenu de se retourner à la ligne */
+  
+        
+    }
+    h1 {
+        margin: 70px auto; /* Centrer la table horizontalement avec une marge de 20px autour */
+        margin-left: 650px; /* Mettre la marge à gauche automatiquement pour décaler le titre vers la droite */
+    margin-bottom: 15px; /* Réduire l'espace sous le titre */
+
+    }
+    button {
+      width: 10%; /* Définir la largeur de la table */
+      margin: 70px; /* Centrer la table horizontalement avec une marge de 20px autour */
+    margin-top: 25px; /* Réduire l'espace au-dessus du bouton */
+    margin-left: 1200px; /* Ajouter une marge de 30px à gauche pour décaler la table vers la droite */
+
+  }
+  
+  table input[type="text"] {
+    border: none; /* Supprimer la bordure */
+    background-color: transparent; /* Supprimer l'arrière-plan */
+    outline: none; /* Supprimer le contour lorsqu'il est en surbrillance */
+    width: 100%; /* Remplir toute la largeur de la cellule */
+}
+#ajouterLigne {
+  background-color: blue;
+  color: white; /* Couleur du texte */
+  padding: 10px 20px; /* Remplissage (haut/bas gauche/droit) */
+  font-size: 16px; /* Taille de police */
+  border: none; /* Supprimer les bordures */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Curseur de type main au survol */
+}
+
+/* Style au survol */
+#ajouterLigne:hover {
+  background-color: blue; /* Couleur de fond au survol */
+}
+
+/* Style lorsque le bouton est cliqué (enfoncé) */
+#ajouterLigne:active {
+  background-color: #3e8e41; /* Couleur de fond enfoncée */
+}
+.message-box {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding: 10px 20px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  left: calc(30% + 300px);
+
+}
+
+.message-box p {
+  margin: 0;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 18px;
+  cursor: pointer;
+} 
+
+
+/* Styles pour la cellule contenant les boutons "Supprimer" et "Modifier" */
+td.actions-cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Style pour les boutons "Supprimer" et "Modifier" */
+button.supprimer-ligne,
+button.modifier-ligne {
+  background-color: #ff0000; /* Couleur de fond */
+  color: #ffffff; /* Couleur du texte */
+  padding: 4px 8px; /* Remplissage (haut/bas gauche/droit) */
+  font-size: 12px; /* Taille de police */
+  border: none; /* Supprimer les bordures */
+  border-radius: 4px; /* Coins arrondis */
+  cursor: pointer; /* Curseur de type main au survol */
+  margin: 70px; /* Centrer la table horizontalement avec une marge de 15px autour */
+  width: auto; /* La largeur du bouton sera automatiquement ajustée pour contenir tout le texte */
+
+}
+
+/* Style au survol */
+button.supprimer-ligne:hover,
+button.modifier-ligne:hover {
+  background-color: #cc0000; /* Couleur de fond au survol */
+}
+
+/* Style lorsque le bouton est cliqué (enfoncé) */
+button.supprimer-ligne:active,
+button.modifier-ligne:active {
+  background-color: #990000; /* Couleur de fond enfoncée */
+}
+/* Style du bouton */
+#enregistrer-btn {
+  background-color: blue; /* Couleur de fond du bouton */
+  color: white; /* Couleur du texte du bouton */
+  padding: 10px 20px; /* Espacement intérieur du bouton (haut/bas gauche/droite) */
+  border: none; /* Supprime la bordure du bouton */
+  cursor: pointer; /* Change le curseur lorsqu'il survole le bouton */
+  border-radius: 5px; /* Arrondi des coins du bouton */
+}
+
+/* Style du bouton lorsque survolé */
+#enregistrer-btn:hover {
+  background-color: #45a049; /* Couleur de fond du bouton lorsque survolé */
+}
+
+/* Style du bouton lorsque pressé (clic) */
+#enregistrer-btn:active {
+  background-color: #367737; /* Couleur de fond du bouton lorsque pressé */
+}
+.styled-select {
+  /* Styles généraux pour la liste déroulante */
+  width: 200px; /* Largeur de la liste déroulante */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+.styled-select:hover {
+  /* Styles au survol de la liste déroulante */
+  border-color: #999;
+}
+
+.styled-select:focus {
+  /* Styles lorsque la liste déroulante est en focus */
+  border-color: #555;
+  box-shadow: 0 0 5px rgba(85, 85, 85, 0.5);
+  outline: none;
+}
+
+    </style>   
+</head>
+<body>
+  {% include "sidebar.html" %}
+
+  <h1>Critères de sélection</h1>
+  <button id="ajouterLigne">Ajouter un critère</button>
+
+  <!-- Table with a border -->
+  <table id="monTableau">
+    <thead>
+        <tr id="1">
+            <th>Grade</th>
+            <th>Années de selection</th>
+            <th>Quota</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Les lignes du tableau seront générées ici -->
+        {{ lignes_tableau | safe }}
+        <tr id="2">
+            <td>
+              <select id="liste" name="liste" class="styled-select">
+                
+            </select>
+            </td>
+            <td><input type="text" name="annee_selection" /></td>
+            <td><input type="text" name="quota" /></td>
+            <td><button onclick="enregistrerLigne(this)">Enregistrer</button></td>
+        </tr>
+    </tbody>
+</table>
+
+
+  <div class="message-box" id="messageBox">
+    <p id="messageText"></p>
+    <span class="close-btn" onclick="fermerMessageBox()">&times;</span>
+  </div>
+
+  <button id="enregistrer-btn" name="enregistrer" onclick="enregistrerDonnees()">Enregistrer</button>
+  <script>
+    var techniciens = {{ techniciens | tojson | safe }};
+  </script>
+  
+  <!-- ... Autres balises et contenu HTML ... -->
+  
+  <select name="libelle_grade" id="libelle_grade">
+    {% for technicien in techniciens %}
+      <option value="{{ technicien }}">{{ technicien }}</option>
+    {% endfor %}
+  </select>
+<script>
+
+
+  // Fonction pour envoyer les données au serveur
+  function enregistrerDonnees() {
+    const rows = document.querySelectorAll("#monTableau tbody tr");
+    const donnees = [];
+  
+    for (const ligne of rows) {
+      const libelle_grade = ligne.cells[0].querySelector("select").value;
+      const annee_selection = ligne.cells[1].querySelector("input").value;
+      const quota = ligne.cells[2].querySelector("input").value;
+  
+      // Vérification des champs vides
+      if (!libelle_grade || !annee_selection || !quota) {
+        afficherMessage('Veuillez remplir tous les champs.', 'error');
+        return; // Sortir de la fonction si un champ est vide
+      }
+  
+      donnees.push({
+        libelle_grade: libelle_grade,
+        annee_selection: annee_selection,
+        quota: quota,
+      });
+    }
+  
+    const selectElements = [...document.querySelectorAll("#monTableau tbody tr select")];
+    const gradesSelectionnes = new Set();
+  
+    // Vérification des doublons
+    let doublon = false;
+    for (const selectElement of selectElements) {
+      const gradeSelectionne = selectElement.value;
+      if (gradesSelectionnes.has(gradeSelectionne)) {
+        doublon = true;
+        break;
+      }
+      gradesSelectionnes.add(gradeSelectionne);
+    }
+  
+    if (doublon) {
+      afficherMessage('Ce grade est déjà sélectionné.', 'error');
+      return; // Sortir de la fonction pour éviter d'ajouter des données en doublon
+    }
+  
+    fetch('/criteres_selection', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(donnees)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erreur lors de la requête au serveur.');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.message === 'Données enregistrées avec succès.') {
+        afficherMessage(data.message, 'success');
+      } else {
+        afficherMessage('Erreur lors de l\'enregistrement des données.', 'error');
+      }
+    })
+    .catch(error => {
+      console.error('Erreur lors de l\'enregistrement des données :', error);
+      afficherMessage('Erreur lors de l\'enregistrement des données.', 'error');
+    });
+  }
+  
+  
+  function afficherMessage(messageText, messageType) {
+    const messageBox = document.getElementById("messageBox");
+    const messageTextElement = document.getElementById("messageText");
+  
+    // Définir le texte et la couleur du message en fonction du type
+    messageTextElement.textContent = messageText;
+    if (messageType === "success") {
+      messageBox.style.backgroundColor = "#4CAF50"; // Vert pour les messages de succès
+    } else if (messageType === "error") {
+      messageBox.style.backgroundColor = "#f44336"; // Rouge pour les messages d'erreur
+    }
+  
+    // Afficher la boîte de message
+    messageBox.style.display = "block";
+  
+  }
+  const messageBox = document.getElementById("messageBox");
+        messageBox.addEventListener("click", function() {
+            fermerMessageBox();
+        });
+        function fermerMessageBox() {
+          const messageBox = document.getElementById("messageBox");
+          messageBox.style.display = "none";
+      }
+  document.addEventListener("DOMContentLoaded", function () {
+    // Fonction pour afficher le sous-menu au passage de la souris sur "Paramétrage"
+    const parametrageLink = document.querySelector(".has-submenu");
+    const parametrageSubmenu = document.querySelector(".parametrage-submenu");
+  
+    parametrageLink.addEventListener("mouseover", () => {
+      parametrageSubmenu.style.display = "block";
+    });
+  
+    parametrageLink.addEventListener("mouseout", () => {
+      parametrageSubmenu.style.display = "none";
+    });
+  
+    // Fonction pour afficher le sous-menu au passage de la souris sur "Gestion"
+    const gestionLink = document.querySelectorAll(".has-submenu")[1];
+    const gestionSubmenu = document.querySelector(".gestion-submenu");
+  
+    gestionLink.addEventListener("mouseover", () => {
+      gestionSubmenu.style.display = "block";
+    });
+  
+    gestionLink.addEventListener("mouseout", () => {
+      gestionSubmenu.style.display = "none";
+    });
+  
+    const criteresSelectionLink = document.querySelector('a[href="#"]');
+    criteresSelectionLink.addEventListener("click", () => {
+      console.log("Lien 'Critères de Sélection' cliqué");
+      window.location.href = "/criteres_selection"; // Redirection vers la nouvelle page
+    });
+  
+    const boutonAjouter = document.getElementById("ajouterLigne");
+    const tbody = document.querySelector("#monTableau tbody");
+    const valeursSaisies = [];
+    var techniciens = {{ techniciens | tojson | safe }};
+
+   boutonAjouter.addEventListener("click", function () {
+    const nouvelleLigne = document.createElement("tr");
+
+    // Créer la cellule pour le select
+    const celluleSelect = document.createElement("td");
+    const select = document.createElement("select");
+    select.name = "libelle_grade";
+
+    // Utiliser les options récupérées depuis la variable 'techniciens'
+    techniciens.forEach(optionText => {
+      const option = document.createElement("option");
+      option.value = optionText;
+      option.text = optionText;
+      select.appendChild(option);
+    });
+
+    celluleSelect.appendChild(select);
+    nouvelleLigne.appendChild(celluleSelect);
+    
+      // Créer les cellules pour les inputs
+      for (let i = 0; i < 2; i++) {
+        const cellule = document.createElement("td");
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = "";
+        cellule.appendChild(input);
+        nouvelleLigne.appendChild(cellule);
+      }
+    
+      // Ajouter le bouton de suppression pour la nouvelle ligne
+      ajouterBoutonSuppression(nouvelleLigne);
+    
+      tbody.appendChild(nouvelleLigne);
+    
+      valeursSaisies.push({
+        colonne1: "",
+        colonne2: "",
+        colonne3: "",
+      });
+    
+      console.log(valeursSaisies);
+    });
+    
+  
+    function ajouterBoutonSuppression(ligne) {
+      const celluleActions = document.createElement("td");
+      celluleActions.className = "actions-cell";
+    
+      const boutonSuppression = document.createElement("button");
+      boutonSuppression.className = "supprimer-ligne";
+      boutonSuppression.innerText = "Supprimer";
+      boutonSuppression.addEventListener("click", function() {
+        supprimerLigne(this);
+      });
+    
+      celluleActions.appendChild(boutonSuppression);
+      ligne.appendChild(celluleActions);
+    }
+  
+    function afficherDonnees(donnees) {
+      const tableau = document.getElementById("monTableau");
+      const tbody = tableau.getElementsByTagName("tbody")[0];
+      tbody.innerHTML = "";
+  
+      donnees.forEach((enregistrement) => {
+        const nouvelleLigne = document.createElement("tr");
+      
+        // Créer la cellule pour le select
+        const celluleSelect = document.createElement("td");
+        const select = document.createElement("select");
+        select.name = "libelle_grade";
+      
+        // Utiliser les options récupérées depuis la variable 'techniciens'
+    techniciens.forEach(optionText => {
+      const option = document.createElement("option");
+      option.value = optionText;
+      option.text = optionText;
+      select.appendChild(option);
+    });
+        // Sélectionner l'option correspondant à la valeur enregistrée
+        select.value = enregistrement["libelle_grade"];
+      
+        celluleSelect.appendChild(select);
+        nouvelleLigne.appendChild(celluleSelect);
+      
+        // Créer les cellules pour les autres colonnes
+        const colonnes = ["annee_selection", "quota"];
+        colonnes.forEach((colonne) => {
+          const cellule = document.createElement("td");
+          const input = document.createElement("input");
+          input.type = "text";
+          input.name = colonne;
+          input.value = enregistrement[colonne] || "";
+          cellule.appendChild(input);
+          nouvelleLigne.appendChild(cellule);
+        });
+      
+        // Ajouter le bouton de suppression pour la nouvelle ligne
+        ajouterBoutonSuppression(nouvelleLigne);
+      
+        tbody.appendChild(nouvelleLigne);
+      });
+      
+    }
+  
+    function supprimerLigne(bouton) {
+      const ligneASupprimer = bouton.parentNode.parentNode;
+      const libelleSelect = ligneASupprimer.cells[0].querySelector("select");
+      const libelle = libelleSelect.value;
+      console.log("Libellé récupéré :", libelle);
+      ligneASupprimer.remove();
+    
+      // Vous pouvez maintenant envoyer le libellé au serveur pour supprimer l'enregistrement de la base de données
+      supprimerEnregistrementServeur(libelle);
+    }
+    
+    
+  
+    const donnees = {{ donnees | tojson }};
+    afficherDonnees(donnees);
+  
+    const boutonsSupprimer = document.getElementsByClassName("supprimer-ligne");
+    for (let i = 0; i < boutonsSupprimer.length; i++) {
+      boutonsSupprimer[i].addEventListener("click", function () {
+        supprimerLigne(this);
+      });
+    }
+  });
+  function supprimerEnregistrementServeur(libelle) {
+    fetch('/criteres_selection', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ libelle_grade: libelle })
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Traiter la réponse du serveur si nécessaire
+      console.log('Enregistrement supprimé avec succès');
+      afficherMessage('Données supprimées avec succès.', 'success');
+    })
+    .catch(error => {
+      console.error('Erreur lors de la suppression de l\'enregistrement :', error);
+      afficherMessage('Erreur lors de suppression des données.', 'error');
+    });
+  }
+  
+
+</script>
+
+</body>
+</html>
